@@ -1,6 +1,7 @@
 """This file should have our order classes in it."""
 
 import random
+import datetime
 
 class AbstractMelonOrder(object):
 
@@ -14,14 +15,21 @@ class AbstractMelonOrder(object):
         self.order_type = order_type
 
     def get_base_price(self):
+        day_of_week = datetime.datetime.today().weekday()
+        current_time = datetime.datetime.now().time())
+        hour = current_time.hour
+        base = random.randint(5,9)
 
-        return random.randint(5,9)
+        if day_of_week < 5 and hour > 7 and hour < 11:
+            base += 4
+
+        return base
+
 
     def get_total(self):
         """Calculate price."""
 
         base_price = self.get_base_price()
-        print base_price
 
         if self.species.lower() == "christmas":
             base_price *= 1.5
