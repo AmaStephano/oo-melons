@@ -9,14 +9,17 @@ class AbstractMelonOrder(object):
         """Initialize melon order attributes"""
 
         self.species = species
+        
+        if qty > 100:
+            raise TooManyMelonsError
+
         self.qty = qty
         self.shipped = False
         self.tax = tax
         self.order_type = order_type
 
     def get_base_price(self):
-        day_of_week = datetime.datetime.today().weekday()
-        current_time = datetime.datetime.now().time())
+        current_time = datetime.datetime.now().time()
         hour = current_time.hour
         base = random.randint(5,9)
 
@@ -83,4 +86,10 @@ class GovernmentMelonOrder(AbstractMelonOrder):
         self.passed_inspection = passed
 
         return self.passed_inspection
+
+# More like a mixin, but you don't have to name it as a mixin. 
+class TooManyMelonsError(ValueError):
+    def __init__(self):
+        super(TooManyMelonsError,self).__init__("No more than 100 melons")
+
 
